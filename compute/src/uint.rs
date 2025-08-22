@@ -50,7 +50,7 @@ impl<const N: usize> Display for GarbledUint<N> {
 
 impl<const BITS: usize> LowerHex for GarbledUint<BITS> {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        let nibbles = (BITS + 3) / 4;
+        let nibbles = (BITS + 3).div_ceil(4);
 
         let mut padded_bits = self.bits.clone();
         while padded_bits.len() < nibbles * 4 {
