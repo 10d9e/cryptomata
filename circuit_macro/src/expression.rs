@@ -327,7 +327,7 @@ fn handle_if_expression(expr_if: ExprIf, constants: &mut Vec<TokenStream>) -> Ex
 
     // Check if `cond` is an `if let` with a range pattern
     let cond_expr = match *cond {
-        Expr::Let(ExprLet { pat, expr, .. }) => handle_if_let_pattern(pat, expr, constants),
+        Expr::Let(ExprLet { pat, expr, .. }) => handle_if_let_pattern(*pat, *expr, constants),
         ref _other => replace_expressions(*cond, constants),
     };
 
