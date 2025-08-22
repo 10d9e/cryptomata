@@ -2,7 +2,6 @@ use crate::operations::circuits::traits::CircuitExecutor;
 use crate::operations::circuits::types::GateIndexVec;
 use crate::uint::GarbledUint;
 use crate::{executor::get_executor, uint::GarbledBoolean};
-use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::fmt::Debug;
@@ -10,7 +9,7 @@ use tandem::{Circuit, Gate};
 
 pub type GateIndex = u32;
 
-#[derive(Default, Clone, Serialize, Deserialize)]
+#[derive(Default, Clone)]
 pub struct WRK17CircuitBuilder {
     inputs: Vec<bool>,
     gates: Vec<Gate>,

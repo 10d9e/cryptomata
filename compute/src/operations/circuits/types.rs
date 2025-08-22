@@ -26,7 +26,7 @@ impl GateIndexVec {
         self.0.is_empty()
     }
 
-    pub fn iter(&self) -> std::slice::Iter<GateIndex> {
+    pub fn iter(&self) -> std::slice::Iter<'_, GateIndex> {
         self.0.iter()
     }
 

@@ -1,5 +1,3 @@
-use serde::{Deserialize, Serialize};
-
 use crate::int::GarbledInt;
 use ruint::Uint;
 use std::fmt::{Display, Formatter, LowerHex};
@@ -20,7 +18,7 @@ pub type GarbledUint512 = GarbledUint<512>;
 pub type GarbledUint1024 = GarbledUint<1024>;
 
 // Define a new type Uint<N>
-#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[derive(Debug, Clone, Default)]
 pub struct GarbledUint<const N: usize> {
     pub bits: Vec<bool>,
     _phantom: PhantomData<[bool; N]>,
