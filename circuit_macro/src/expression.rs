@@ -105,7 +105,9 @@ pub fn replace_expressions(expr: Expr, constants: &mut Vec<TokenStream>) -> Expr
 }
 
 fn handle_binary_expression(expr: ExprBinary, constants: &mut Vec<TokenStream>) -> Expr {
-    let ExprBinary { left, right, op, .. } = expr;
+    let ExprBinary {
+        left, right, op, ..
+    } = expr;
 
     match op {
         // Comparison operators
@@ -347,8 +349,8 @@ fn handle_if_expression(expr_if: ExprIf, constants: &mut Vec<TokenStream>) -> Ex
     }}
 }
 
-fn handle_if_let_pattern(pat: Box<Pat>, expr: Box<Expr>, constants: &mut Vec<TokenStream>) -> Expr {
-    match &*pat {
+fn handle_if_let_pattern(pat: Pat, expr: Expr, constants: &mut Vec<TokenStream>) -> Expr {
+    match pat {
         // Handle inclusive range pattern (e.g., 1..=5)
         syn::Pat::Range(syn::PatRange {
             start: Some(start),
@@ -358,7 +360,7 @@ fn handle_if_let_pattern(pat: Box<Pat>, expr: Box<Expr>, constants: &mut Vec<Tok
         }) => {
             let start_expr = replace_expressions(*start.clone(), constants);
             let end_expr = replace_expressions(*end.clone(), constants);
-            let input_expr = replace_expressions(*expr, constants);
+            let input_expr = replace_expressions(expr, constants);
 
             syn::parse_quote! {{
                 let lhs = &context.ge(&#input_expr.into(), &#start_expr.into()).into();
@@ -375,7 +377,7 @@ fn handle_if_let_pattern(pat: Box<Pat>, expr: Box<Expr>, constants: &mut Vec<Tok
         }) => {
             let start_expr = replace_expressions(*start.clone(), constants);
             let end_expr = replace_expressions(*end.clone(), constants);
-            let input_expr = replace_expressions(*expr, constants);
+            let input_expr = replace_expressions(expr, constants);
 
             syn::parse_quote! {{
                 let lhs = &context.ge(&#input_expr.into(), &#start_expr.into()).into();
@@ -386,7 +388,7 @@ fn handle_if_let_pattern(pat: Box<Pat>, expr: Box<Expr>, constants: &mut Vec<Tok
         // Handle single literal pattern, e.g., `if let 5 = n`
         syn::Pat::Lit(lit) => {
             let lit_expr = replace_expressions(Expr::Lit(lit.clone()), constants);
-            let input_expr = replace_expressions(*expr, constants);
+            let input_expr = replace_expressions(expr, constants);
 
             syn::parse_quote! {
                 context.eq(&#input_expr.into(), &#lit_expr.into())
@@ -460,10 +462,8 @@ fn handle_match_expression(expr_match: ExprMatch, constants: &mut Vec<TokenStrea
 
                 syn::Pat::Ident(pat) => {
                     // Create conditional expression for each arm
-                    let cond_expr = replace_expressions(
-                        syn::parse_quote! { #match_expr == #pat },
-                        constants,
-                    );
+                    let cond_expr =
+                        replace_expressions(syn::parse_quote! { #match_expr == #pat }, constants);
 
                     syn::parse_quote! {{
                         { #cond_expr }
