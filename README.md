@@ -1,6 +1,6 @@
 [![Crates.io](https://img.shields.io/crates/v/cryptomata.svg)](https://crates.io/crates/cryptomata)
 [![Docs.rs](https://docs.rs/cryptomata/badge.svg)](https://docs.rs/cryptomata)
-[![CI](https://github.com/Gateway-DAO/cryptomata/workflows/CI/badge.svg)](https://github.com/Gateway-DAO/cryptomata/actions)
+[![CI](https://github.com/10d9e/cryptomata/workflows/CI/badge.svg)](https://github.com/10d9e/cryptomata/actions)
 # Gateway Circuit SDK
 
 The "Gateway Circuit SDK", is an encrypted runtime environment that enables developers to use regular rust functions as secure circuits, whereby an evaluator executes a secure function on a user's ciphertext inputs, without ever seeing the encrypted values. The protocol allows end users to process on encrypted data while ensuring both privacy and verifiability without the need for additional zero-knowledge proofs (such as SNARKs) for inputs and outputs.
