@@ -9,7 +9,7 @@ compute = { path = "../compute" }
 tfhe = { version = "0.10.0", features = [ "boolean", "shortint", "integer" ] }
 
 [dev-dependencies]
-criterion = "0.5" # Use Criterion for stable benchmarking
+criterion = "0.7" # Use Criterion for stable benchmarking
 
 [[bench]]
 name = "benchmarks"
